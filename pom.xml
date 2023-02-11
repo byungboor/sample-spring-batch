@@ -17,7 +17,6 @@
         <java.version>17</java.version>
     </properties>
     <dependencies>
-        <!-- TODO-01 batch starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-batch</artifactId>

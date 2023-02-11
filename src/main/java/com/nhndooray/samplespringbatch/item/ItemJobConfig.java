@@ -6,9 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
-import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
@@ -31,23 +29,23 @@ public class ItemJobConfig {
     private final JobRepository jobRepository;
     private final PlatformTransactionManager transactionManager;
 
+    // TODO-02
+    //  - JobBuilder 를 사용하여
+    //  - job 이름이 itemClickThroughRateJob 이고
+    //  - Step itemClickStep 스프링 빈을 포함하는 Job 을 만드세요
     @Bean
     public Job itemClickThroughRateJob() {
-        System.out.println("-------------------------------> create job ");
-        return new JobBuilder("itemClickThroughRateJob", jobRepository)
-                .preventRestart() // disable restartability
-                .start(itemClickStep())
-                .build();
+        return null;
     }
 
+    // TODO-03
+    //  - StepBuilder 를 사용하여
+    //  - Step 이름이 itemClickStep 이고
+    //  - Chunk 크기가 3 이고
+    //  - accessLogReader(), clickLogFilterProcess(), itemClickWriter() 를 포함하는 Step 을 만드세요
     @Bean
     public Step itemClickStep() {
-        return new StepBuilder("itemClickStep", jobRepository)
-                .chunk(3, transactionManager)
-                .reader(accessLogReader())
-                .processor(clickLogFilterProcessor())
-                .writer(itemClickLogWriter())
-                .build();
+        return null;
     }
 
     @Bean
@@ -60,7 +58,7 @@ public class ItemJobConfig {
 
     LineMapper<AccessLog> accessLogLineMapper = (line, lineNumber) -> {
         try {
-            System.out.println("-----------------------line");
+            System.out.println("read line : " + line);
             return new AccessLog(line);
         } catch (Exception e) {
             log.error("error processing line:{} = {},e", lineNumber, line, e);
@@ -85,7 +83,7 @@ public class ItemJobConfig {
 
     LineAggregator<ItemClickLog> memberAggregator = (itemClickLog) -> {
         try {
-            System.out.println("0------------");
+            System.out.println("write item : " + itemClickLog.getItemId());
             return JsonUtil.OBJECT_MAPPER.writeValueAsString(itemClickLog);
         } catch (JsonProcessingException e) {
             log.error("error processing. itemClickLog:{}", itemClickLog, e);

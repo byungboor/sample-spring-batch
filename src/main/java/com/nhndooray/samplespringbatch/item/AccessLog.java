@@ -27,11 +27,4 @@ public class AccessLog {
         this.httpStatus = HttpStatusCode.valueOf(Integer.valueOf(tokens[7]));
         this.size = Integer.valueOf(tokens[8]);
     }
-
-    public static void main(String[] args){
-        String line = "10.244.1.1 - http-nio-10830-exec-5 [08/Feb/2023:22:09:37 +0900] \"GET /items/111\" 200 60";
-        AccessLog accessLog = new AccessLog(line);
-        System.out.println(accessLog);
-    }
-
 }
