@@ -76,7 +76,7 @@ public class ItemJobConfig {
 
         FlatFileItemWriter<ItemClickLog> writer = new FlatFileItemWriter<>();
         writer.setName("itemClickLogWriter");
-        writer.setResource(new FileSystemResource("~/output/clickLog.json"));
+        writer.setResource(new FileSystemResource("./output/clickLog.json"));
         writer.setLineAggregator(memberAggregator);
         return writer;
     }
