@@ -5,7 +5,10 @@ import com.nhndooray.samplespringbatch.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.annotation.BeforeJob;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
@@ -35,6 +38,7 @@ public class ItemJobConfig {
     public Job itemClickThroughRateJob() {
         return new JobBuilder("itemClickThroughRateJob", jobRepository)
                 .start(itemClickStep())
+                .listener(new ItemJobListener())    // TODO - 02 : setup
                 .build();
     }
 
