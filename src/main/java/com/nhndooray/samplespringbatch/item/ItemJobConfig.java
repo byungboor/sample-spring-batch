@@ -31,10 +31,6 @@ public class ItemJobConfig {
     private final JobRepository jobRepository;
     private final PlatformTransactionManager transactionManager;
 
-    // TODO-02
-    //  - JobBuilder 를 사용하여
-    //  - job 이름이 itemClickThroughRateJob 이고
-    //  - Step itemClickStep 스프링 빈을 포함하는 Job 을 만드세요
     @Bean
     public Job itemClickThroughRateJob() {
         return new JobBuilder("itemClickThroughRateJob", jobRepository)
@@ -42,11 +38,6 @@ public class ItemJobConfig {
                 .build();
     }
 
-    // TODO-03
-    //  - StepBuilder 를 사용하여
-    //  - Step 이름이 itemClickStep 이고
-    //  - Chunk 크기가 3 이고
-    //  - accessLogReader(), clickLogFilterProcess(), itemClickWriter() 를 포함하는 Step 을 만드세요
     @Bean
     public Step itemClickStep() {
         return new StepBuilder("itemClickStep", jobRepository)
