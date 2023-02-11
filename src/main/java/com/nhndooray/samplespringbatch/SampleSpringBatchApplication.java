@@ -4,8 +4,6 @@ import org.springframework.batch.core.configuration.annotation.EnableBatchProces
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-// TODO-02
-@EnableBatchProcessing
 @SpringBootApplication
 public class SampleSpringBatchApplication {
 
