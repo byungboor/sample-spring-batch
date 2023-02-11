@@ -6,7 +6,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
@@ -35,7 +37,9 @@ public class ItemJobConfig {
     //  - Step itemClickStep 스프링 빈을 포함하는 Job 을 만드세요
     @Bean
     public Job itemClickThroughRateJob() {
-        return null;
+        return new JobBuilder("itemClickThroughRateJob", jobRepository)
+                .start(itemClickStep())
+                .build();
     }
 
     // TODO-03
@@ -45,7 +49,12 @@ public class ItemJobConfig {
     //  - accessLogReader(), clickLogFilterProcess(), itemClickWriter() 를 포함하는 Step 을 만드세요
     @Bean
     public Step itemClickStep() {
-        return null;
+        return new StepBuilder("itemClickStep", jobRepository)
+                .chunk(3, transactionManager)
+                .reader(accessLogReader())
+                .processor(clickLogFilterProcessor())
+                .writer(itemClickLogWriter())
+                .build();
     }
 
     @Bean
