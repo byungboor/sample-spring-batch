@@ -35,10 +35,10 @@ public class ItemJobConfig {
     private final PlatformTransactionManager transactionManager;
 
     @Bean
-    public Job itemClickThroughRateJob() {
+    public Job itemClickThroughRateJob(ItemJobListener itemJobListener) {
         return new JobBuilder("itemClickThroughRateJob", jobRepository)
                 .start(itemClickStep())
-                .listener(new ItemJobListener())    // TODO - 02 : setup
+                .listener(itemJobListener)
                 .build();
     }
 
