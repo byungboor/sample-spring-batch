@@ -2,6 +2,7 @@ package com.nhndooray.samplespringbatch.stats;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
@@ -12,6 +13,7 @@ import org.springframework.batch.item.database.PagingQueryProvider;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
 import org.springframework.batch.item.database.builder.JdbcPagingItemReaderBuilder;
 import org.springframework.batch.item.database.support.SqlPagingQueryProviderFactoryBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -36,17 +38,22 @@ public class WeeklyStatStepConfig {
         return new StepBuilder("aggregateWeeklyStatStep", jobRepository)
                 .chunk(CHUNK_SIZE, transactionManager)
                 .transactionManager(transactionManager)
-                .reader(aggregatedWeeklyStatReader())
+                .reader(aggregatedWeeklyStatReader(null, null))
                 .processor(ctrProcessor())
                 .writer(weeklyStatWriter())
                 .build();
     }
 
+    // TODO - 04
+    //    - JobParameter 의 값을 각각 beginDate, endDate 에 주입합니다.
+    //    - JobParameter 의 값을 정상적으로 주입하려면 특별한 Scope 가 필요합니다.
     @Bean
-    public JdbcPagingItemReader<WeeklyStat> aggregatedWeeklyStatReader() throws Exception {
+    @StepScope
+    public JdbcPagingItemReader<WeeklyStat> aggregatedWeeklyStatReader(String beginDate,
+                                                                       String endDate) throws Exception {
         Map<String, Object> paramValues = Map.of(
-                "beginDate", "20230101",
-                "endDate", "20230107");
+                "beginDate", beginDate,
+                "endDate", endDate);
 
         return new JdbcPagingItemReaderBuilder<WeeklyStat>()
                 .pageSize(PAGE_SIZE)
