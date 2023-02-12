@@ -45,7 +45,6 @@ public class WeeklyStatStepConfig {
     @Bean
     public JdbcPagingItemReader<WeeklyStat> aggregatedWeeklyStatReader() throws Exception {
         Map<String, Object> paramValues = Map.of(
-                "startDate", "20230101",
                 "beginDate", "20230101",
                 "endDate", "20230107");
 
@@ -56,7 +55,7 @@ public class WeeklyStatStepConfig {
                 .rowMapper(new BeanPropertyRowMapper<>(WeeklyStat.class))
                 .queryProvider(createQueryProvider())
                 .parameterValues(paramValues)
-                .name("dailyStatReader")
+                .name("aggregatedWeeklyStatReader")
                 .build();
     }
 
