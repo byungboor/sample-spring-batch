@@ -11,14 +11,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 public class SampleSpringBatchApplication {
 
-    public static void main(String[] args) throws Exception {
-        ConfigurableApplicationContext ctxt = SpringApplication.run(SampleSpringBatchApplication.class, args);
-
-        // TODO - 02
-        // @EnableBatchProcessing
-        JobLauncher jobLauncher = ctxt.getBean(JobLauncher.class);
-        Job weeklyStatJob = ctxt.getBean("weeklyStatJob", Job.class);
-        jobLauncher.run(weeklyStatJob, new JobParametersBuilder().toJobParameters());
+    public static void main(String[] args) {
+        SpringApplication.run(SampleSpringBatchApplication.class, args);
     }
 
 }
