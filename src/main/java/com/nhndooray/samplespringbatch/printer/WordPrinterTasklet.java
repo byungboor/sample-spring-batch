@@ -26,7 +26,7 @@ public class WordPrinterTasklet implements Tasklet {
         //    - readLetter() 가 null 을 리턴하면 종료 아니면 계속 실행이다.
         //    - 다음 return 구문에 적절한 값을 넣어보자.
         if (letter == null)
-            return RepeatStatus.FINISHED;
+            return null;
 
         String upperCaseLetter = letter.toUpperCase();
         System.out.println(upperCaseLetter);
@@ -34,7 +34,7 @@ public class WordPrinterTasklet implements Tasklet {
         // TODO-03 - 탈출조건 확인 해보자.
         //    - readLetter() 가 null 을 리턴하면 종료 아니면 계속 실행이다.
         //    - 다음 return 구문에 적절한 값을 넣어보자.
-        return RepeatStatus.CONTINUABLE;
+        return null;
     }
 
     private String readLetter() {
@@ -42,7 +42,7 @@ public class WordPrinterTasklet implements Tasklet {
         if (offset >= lines.size())
             return null;
 
-        return lines.get(offset++);
+        return null;
     }
 
 }
