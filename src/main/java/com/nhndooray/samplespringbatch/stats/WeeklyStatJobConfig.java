@@ -28,7 +28,7 @@ public class WeeklyStatJobConfig {
 
 
     // TODO - 04
-    @Scheduled(cron = "0 0/10 * * * *")
+    @Scheduled(cron = "0/10 * * * * *")
     public void launchWeeklyStatJob() {
         try {
             System.out.println("Launch WeeklyStatJob --------------------------------------");
