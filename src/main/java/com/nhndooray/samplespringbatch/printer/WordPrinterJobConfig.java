@@ -28,8 +28,6 @@ public class WordPrinterJobConfig {
 
     @Bean
     public Step wordPrintStep(Tasklet wordPrinterTasklet) {
-        // TODO -05
-        //    - StepBuilder 와 tasklet() 메서드를 사용하여 Tasklet 을 포함하는 wordPrintStep 스프링 빈을 만들어보자.
         return null;
     }
 
