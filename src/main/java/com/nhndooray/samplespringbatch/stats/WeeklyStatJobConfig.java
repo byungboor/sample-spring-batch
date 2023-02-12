@@ -14,6 +14,8 @@ public class WeeklyStatJobConfig {
 
     private final JobRepository jobRepository;
 
+    // TODO - 04
+    //   - Step 빈 설정이 복잡해지면 이처럼 WeeklyStatJobConfig 과 WeeklyStatStepConfig 으로 분리해도 된다.
     @Bean
     public Job weeklyStatJob(Step aggregateWeeklyStatStep) {
         return new JobBuilder("weeklyStatJob", jobRepository)

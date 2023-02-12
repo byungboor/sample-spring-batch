@@ -5,6 +5,9 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+// TODO - 02
+//   - @Data 를 사용한 java bean 이다.
+//   - BigDecimal 을 사용해야 정확한 계산을 할 수 있다.
 @Data
 public class WeeklyStat {
 

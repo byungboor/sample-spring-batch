@@ -33,33 +33,39 @@ public class WeeklyStatStepConfig {
 
     @Bean
     public Step aggregateWeeklyStatStep() throws Exception {
+
+        // TODO - 08
+        //    - 적절한 reader processor writer 를 설정합니다.
+
         return new StepBuilder("aggregateWeeklyStatStep", jobRepository)
                 .chunk(CHUNK_SIZE, transactionManager)
                 .transactionManager(transactionManager)
-                .reader(aggregatedWeeklyStatReader())
-                .processor(ctrProcessor())
-                .writer(weeklyStatWriter())
                 .build();
     }
 
     @Bean
     public JdbcPagingItemReader<WeeklyStat> aggregatedWeeklyStatReader() throws Exception {
         Map<String, Object> paramValues = Map.of(
-                "startDate", "20230101",
                 "beginDate", "20230101",
                 "endDate", "20230107");
+
+        // TODO - 05
+        //   - JdbcPagingItemReaderBuilder 객체에 queryProvider() 와 parameterValues() 메서드를 사용하여
+        //   - 적절한 queryProvider 와 parameterValue 값을 설정합니다.
 
         return new JdbcPagingItemReaderBuilder<WeeklyStat>()
                 .pageSize(PAGE_SIZE)
                 .fetchSize(PAGE_SIZE)
                 .dataSource(dataSource)
                 .rowMapper(new BeanPropertyRowMapper<>(WeeklyStat.class))
-                .queryProvider(createQueryProvider())
-                .parameterValues(paramValues)
-                .name("dailyStatReader")
+                .name("aggregatedWeeklyStatReader")
                 .build();
     }
 
+    // TODO - 06
+    //  - Background 의 집계 쿼리를 참고하여 PagingQueryProvider 스프링 빈을 만들어주세요.
+    //  - 조건의 where stat_date >= ? and stat_date <= ? 는 변수 처리해야 합니다.
+    //  - 변수는 aggregatedWeeklyStatReader() 의 paramValues 의 이름을 참고하세요.
     @Bean
     public PagingQueryProvider createQueryProvider() throws Exception {
         var query = new SqlPagingQueryProviderFactoryBean();
@@ -78,18 +84,11 @@ public class WeeklyStatStepConfig {
         return new CtrProcessor();
     }
 
+    // TODO - 07
+    //  - beanMapped() 방식을 사용하여 STAT_WEEKLY 테이블에 데이터를 저장하는 weeklyStatWriter 스프링 빈을 만들어주세요
     @Bean
     public ItemWriter<WeeklyStat> weeklyStatWriter() {
-
-        String sql = "insert into STAT_WEEKLY(STAT_DATE, ITEM_ID, CLICK_COUNT,EXPOSE_COUNT, CTR) "
-                     + "values "
-                     + "(:statDate, :itemId, :clickCount, :exposeCount, :ctr)";
-
-        return new JdbcBatchItemWriterBuilder<WeeklyStat>()
-                .dataSource(dataSource)
-                .sql(sql)
-                .beanMapped()
-                .build();
+        return null;
     }
 
 }
