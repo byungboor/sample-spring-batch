@@ -8,17 +8,7 @@ import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
 @RequiredArgsConstructor
 public class WeeklyStatJobConfig {
-
-    private final JobRepository jobRepository;
-
-    @Bean
-    public Job weeklyStatJob(Step aggregateWeeklyStatStep) {
-        return new JobBuilder("weeklyStatJob", jobRepository)
-                .start(aggregateWeeklyStatStep)
-                .build();
-    }
 
 }
